@@ -1,0 +1,135 @@
+#include <avr/power.h>
+#include <avr/sleep.h>
+/*============== Main Declarations ================*/
+#include "header.h"                   // Libraries, Declarations & Gloval variables
+#include "SIM7000E_GNSS.h"            // SIM7000E Module UTC Time funtion
+#include "controllerSetup.h"          // Pin Declarations & General Functions
+#include "checkData.h"                // Checking Functions
+/*=============== Sensor & Modules ================*/
+#include "BH1750.h"                   // Light sensor
+#include "DS18B20.h"                  // Soil Temperature
+#include "DHT22.h"                    // Air Temperature & Humidity sensor
+#include "CSMS.h"                     // Capacitive Soil Moisure Sensor
+#include "SIM7000E.h"                 // SIM7000E Module GPRS + GNSS functions
+#include "SIM7000E_BME280.h"          // SIM7000E BME280 sensor functions
+#include "ADXL335.h"                  // Accelerometer
+#include "logFile.h"
+/*====================== Menu =====================*/
+#include "programStartTime.h"         // Program Start Time Functions
+#include "welcomeMenu.h"              // Welcome Menu Navigation Levels
+#include "manualProgramMenu.h"        // Manual Program Menu Navigation Levels
+#include "automatedProgramMenu.h"     // Automated Program Menu Navigation Levels
+#include "configurationMenu.h"        // Configuration Menu Navigation Levels        
+#include "informationMenu.h"          // Information Menu Navigation Levels
+/*=========== Serial Communication GUI ============*/
+#include "arduinoGUI.h"
+/*============ Battery Level Checker ==============*/
+#include "batteryChecker.h"
+
+
+
+
+/*=========== First Time Declarations ============*/
+void setup() {
+  //set_sleep_mode (SLEEP_MODE_PWR_DOWN);  
+  //sleep_enable();
+ // sleep_cpu ();
+
+ 
+  disable_unusedComponents();
+  //slowArduinoDown();
+  turnOFF_analogPins();
+  turnOFF_digitalPins();
+  /*=========== Serial Declaration ============*/
+  Serial.begin(9600);
+  while (!Serial);
+  turnOffLED();
+
+  /*=========== Set System Parameters ============*/
+  setSystemID(1586);
+  setPhoneNumber("+4915223605953");
+  setMobileOperator("Dataport"); /*vodafone.de...*/
+
+  /*=========== Keypad Declaration ============*/
+  /*========== See controllerSetup.h ==========*/
+  buttonMode();
+
+  /*========= LCD Display Declaration =========*/
+  /*========== See controllerSetup.h ==========*/
+  LCD();
+
+  /*========== H-Bridge Declaration ===========*/
+  /*========== See controllerSetup.h ==========*/
+  rotorDriver();
+  rotorPosition();
+
+  /*========== SIM7000E Declaration ===========*/
+  /*============= See SIM7000E.h ==============*/
+  //Ask for permission
+  activateSIM7000E();
+  if (activatedSIM7000E) {
+    initSIM7000E();
+    initSerial();
+    checkSerial();
+    activateSMS();
+    if (activatedSMS) {
+      setPIN("5000");
+      searchNetworks();
+      checkNetwork();
+      checkSignalStrength();
+      enableSMS();
+    }
+    activateGNSS();
+    if (activatedGNSS) {
+      initPosition();
+      checkPosition();
+    }
+    /*=========== BME280 Declaration ============*/
+    /*======== See SIM7000E_BME280.h ============*/
+    initBME();
+  }
+  /*=========== DS18B20 Declaration ============*/
+  /*============= See DS18B20.h ================*/
+  DS18B20sensor.begin();
+
+  /*============= DHT22 Declaration ============*/
+  /*=============== See DHT22.h ================*/
+  DHT_22.begin();
+
+  /*============ BH1750 Declaration ============*/
+  /*================ See BH1750.h ==============*/
+  initBH1750();
+
+  /*=========== SD Card Declaration ============*/
+  /*=========== See controllerSetup.h ==========*/
+  sdCard();
+
+  /*=========== EEPROM Declaration =============*/
+  EEPROM.get(0, machineID);
+
+  /*======= First Time Boot Declarations =======*/
+  /*=========== See controllerSetup.h ==========*/
+  tempID = machineID;
+  rebootedSystem();
+  backlitTime = millis();
+}
+
+
+//myFile.print("AMMOD-T"); myFile.print(machineID); myFile.print("-M-R"); myFile.print(return2digits(tmYearToCalendar(tm.Year))); myFile.print(return2digits(tm.Month)); myFile.print(return2digits(tm.Day)); myFile.println("-B");
+
+/*================= Main Program ==================*/
+void loop() {
+  RTC.read(tm);                           // Read Time From RTC
+  gui();                                  // See arduinoGUI.h
+  lcdBacklit();                           // See controllerSetup.h
+  //checkSystemFallenDown();                // See ADXL335.h
+  checkSystemTemperature();               // See SIM7000E_BME280.h
+  checkSystemHumidity();                  // See SIM7000E_BME280.h
+  //checkBatteryLevel();                    // See controllerSetup.h
+
+  if (menu == 0) welcomeMenu();           // See welcomeMenu.h
+  if (menu == 1) manualProgramMenu();     // See manualProgramMenu.h
+  if (menu == 2) automatedProgramMenu();  // See automatedProgramMenu.h
+  if (menu == 3) configurationMenu();     // See configurationMenu.h
+  if (menu == 4) informationMenu();       // See infomationMenu.h
+}
