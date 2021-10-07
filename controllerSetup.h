@@ -23,17 +23,17 @@ void turnOFF_analogPins() {
   pinMode(A13, OUTPUT);
   pinMode(A14, OUTPUT);
   pinMode(A15, OUTPUT);
-  digitalWrite(A5, OUTPUT);
-  digitalWrite(A6, OUTPUT);
-  digitalWrite(A7, OUTPUT);
-  digitalWrite(A8, OUTPUT);
-  digitalWrite(A9, OUTPUT);
-  digitalWrite(A10, OUTPUT);
-  digitalWrite(A11, OUTPUT);
-  digitalWrite(A12, OUTPUT);
-  digitalWrite(A13, OUTPUT);
-  digitalWrite(A14, OUTPUT);
-  digitalWrite(A15, OUTPUT);
+  digitalWrite(A5, LOW);
+  digitalWrite(A6, LOW);
+  digitalWrite(A7, LOW);
+  digitalWrite(A8, LOW);
+  digitalWrite(A9, LOW);
+  digitalWrite(A10, LOW);
+  digitalWrite(A11, LOW);
+  digitalWrite(A12, LOW);
+  digitalWrite(A13, LOW);
+  digitalWrite(A14, LOW);
+  digitalWrite(A15, LOW);
 }
 
 void turnOFF_digitalPins() {
