@@ -191,7 +191,7 @@ void startProgram() {
           if (soilTemperature > 21.25 && soilTemperature <= 21.30) bottlePosition = 5;
           if (soilTemperature > 21.30 && soilTemperature <= 21.35) bottlePosition = 6;
           if (soilTemperature > 21.35 && soilTemperature <= 21.40) bottlePosition = 7;
-          if (soilTemperature > 21.45 && soilTemperature <= 21.50) bottlePosition = 8;
+          if (soilTemperature > 21.40 && soilTemperature <= 21.50) bottlePosition = 8;
           if (soilTemperature > 21.50 && soilTemperature <= 21.55) bottlePosition = 9;
           if (soilTemperature > 21.55 && soilTemperature <= 21.60) bottlePosition = 10;
           if (soilTemperature > 21.60 && soilTemperature <= 21.65) bottlePosition = 11;
