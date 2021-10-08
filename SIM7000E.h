@@ -317,3 +317,7 @@ void activateGNSS(){
     }
   }
 }
+
+String createMessage(int ID, String message) {
+    return "AMMOD-T" + String(ID) + "-M " + message;
+}
