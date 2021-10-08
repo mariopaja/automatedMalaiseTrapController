@@ -4,12 +4,8 @@
          : First char of incomming String indicates program
             - A : Start Automated Program
                 : Save Request on logData
-                : Save Data on Local Variables
+                : Save Data on Local Variables -> starting time, selected program
                 : Format (A;hh;mm;DD;MM;YYYY;P)
-
-            - I : Change ID
-                : Save Request on logData
-                : Change Data
 
             - N : Read System Info
                 : Save Request on logData
@@ -17,8 +13,8 @@
 
             - S : Start Manual Program
                 : Save request on logData
-                : Save Data on Local Variables
-                : Format (S;hh;mm;DD;YYYY;B,D;B,D.....)
+                : Save Data on Local Variables -> starting time, tunr interval data from strings to integers and then save to local memory
+                : Format (S;hh;mm;DD;YYYY;B,D;B,D.....) -> B is integer 1 to 13 and D is the interval duration in minutes
 
             - R : Change RTC Time
 
@@ -46,22 +42,6 @@ void gui() {
         menu = 2;
         submenu = 7;
         pressed = true;
-      /*===========================Change ID==============================*/
-      case 'I':
-        program.remove(0, 1);
-        if (tempID != program.toInt()) {
-          myFile = SD.open("test.txt", FILE_WRITE);
-          if (myFile) {
-            myFile.print("# Machine ID changed\t");
-            myFile.print("Old ID: "); myFile.print(machineID);
-            myFile.print("\tNew ID: "); myFile.println(program); myFile.print("\n");
-            myFile.close(); // close the file
-          }
-          EEPROM.put(0, program.toInt());
-          machineID = program.toInt();
-          tempID = machineID;
-        }
-        break;
       /*===========================Read Info==============================*/
       case 'N':
         myFile = SD.open("test.txt", FILE_WRITE);
