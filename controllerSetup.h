@@ -11,6 +11,11 @@ void disable_unusedComponents() {
   //power_twi_disable();
 }
 
+
+/*
+    turnOFF_analogPins()    :   declare analog pins as output
+                            :   declare analog pins as GND
+*/
 void turnOFF_analogPins() {
   pinMode(A5, OUTPUT);
   pinMode(A6, OUTPUT);
@@ -36,6 +41,10 @@ void turnOFF_analogPins() {
   digitalWrite(A15, LOW);
 }
 
+/*
+    turnOFF_digitalPins()   :   declare digital pins as output
+                            :   declare digital pins as output
+*/
 void turnOFF_digitalPins() {
   for (int i = 28; i <= 42; i++) {
     pinMode(i, OUTPUT);
@@ -43,20 +52,28 @@ void turnOFF_digitalPins() {
   }
 }
 
+/*
+    slowArduinoDown()   :   changes the prescaler of the microprocessor
+                        :   0x80 -> activates the prescaler
+                        :   0x01 -> frequency divided by 4 (2^2)
+*/
 void slowArduinoDown() {
   CLKPR = 0x80;
-  CLKPR = 0x01; // divided by 4
+  CLKPR = 0x01;
 }
 
-
+/*
+    turnOffLED()    :   declare pin 13 as output
+                    :   declare pin 13 as GND
+*/
 void turnOffLED() {
   pinMode(13, OUTPUT);
   digitalWrite(13, LOW);
 }
 
 /*
-   declare the buttons
-   SELECT,DOWN,UP,LEFT,RIGHT
+    buttonMode()    :   declare the buttons of the keypad
+                    :   SELECT,DOWN,UP,LEFT,RIGHT
 */
 void buttonMode() {
   pinMode(sel, INPUT_PULLUP);
@@ -71,7 +88,9 @@ void buttonMode() {
 
 
 /*
-   declare a stopped motor
+    rotorDriver()   :   declare a stopped motor
+                    :   motorInput_1 -> LOW & motorInput_2 -> LOW
+                    :   This might change depending on the H-Bridge that is used
 */
 void rotorDriver() {
   digitalWrite(motorInput_1, LOW);
@@ -80,8 +99,9 @@ void rotorDriver() {
 
 
 /*
-   declare magnets
-   declare switch toddle
+    rotorPosition() :   declare magnets
+                    :   declare switch toddle
+                    :   declare GND pin of the plug
 */
 void rotorPosition() {
   pinMode(switchToddle, INPUT_PULLUP);
@@ -95,7 +115,8 @@ void rotorPosition() {
 
 
 /*
-   declare sd card
+    sdCard()    :   declare SD card
+                :   initiliaze SD card
 */
 void sdCard() {
   pinMode(SS, OUTPUT);
@@ -110,18 +131,20 @@ void sdCard() {
 
 
 /*
-   setup lcd panel
-   create new characters:
-   left arrow, right arrow, up&down arrow, underscore
+    LCD()   :   setup lcd panel
+            :   initiliaze lcd panel
+            :   create new characters -> left arrow, right arrow, up&down arrow, underscore
 */
 void LCD() {
   lcd.begin();
   lcd.backlight();
+
   byte arrowLeft[] = {0x02, 0x06, 0x0E, 0x1E, 0x0E, 0x06, 0x02, 0x00};
   byte arrowRight[] = {0x08, 0x0C, 0x0E, 0x0F, 0x0E, 0x0C, 0x08, 0x00};
   byte arrowUpDown[] = {0x04, 0x0E, 0x1F, 0x00, 0x00, 0x1F, 0x0E, 0x04};
   byte arrowUp[] = {0x04, 0x0E, 0x1F, 0x00, 0x00, 0x00, 0x00, 0x00};
   byte underscore[] = {0x1F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
   lcd.createChar(0, arrowLeft);
   lcd.createChar(1, arrowRight);
   lcd.createChar(2, arrowUpDown);
@@ -130,8 +153,9 @@ void LCD() {
 }
 
 /*
-   gets a number
-   returns a 2 char string
+    return2digits() :   turns a single digit number into a two character String
+                    :   input -> integer
+                    :   output -> String
 */
 String return2digits(int number) {
   String s;
@@ -145,6 +169,11 @@ String return2digits(int number) {
   }
 }
 
+/*
+    return3digits() :   turns a single digit number into a tree character String
+                    :   input -> integer
+                    :   output -> String
+*/
 String return3digits(int number) {
   String s;
   if (number >= 0 && number < 10) {
@@ -162,8 +191,8 @@ String return3digits(int number) {
 }
 
 /*
-   clears lcd
-   set cursor at location (0,0) of lcd array
+    clearLCD()  :   clears lcd
+                :   set cursor at location (0,0) of lcd array
 */
 void clearLCD() {
   lcd.clear();
@@ -171,9 +200,9 @@ void clearLCD() {
 }
 
 /*
-   prints Menu
-   prints hh:mm
-   prints DD/MM/YYYY
+    printMainMenu() :   prints Menu
+                    :   prints hh:mm
+                    :   prints DD/MM/YYYY
 */
 void printMainMenu() {
   lcd.print("Menu");
@@ -189,7 +218,9 @@ void printMainMenu() {
 
 
 /*
-   check if right button is pressed while at menu
+    menuPressedRight()  :   check if right button is pressed
+                        :   increments the menu level
+                        :   resets the lcd backlit counting
 */
 void menuPressedRight() {
   if (digitalRead(right) == LOW && backlitStatus == true) {
@@ -203,7 +234,9 @@ void menuPressedRight() {
 
 
 /*
-   check if left button is pressed while at menu
+    menuPressedLeft()  :   check if left button is pressed
+                       :   decrements the menu level
+                       :   resets the lcd backlit counting
 */
 void menuPressedLeft() {
   if (digitalRead(left) == LOW && backlitStatus == true) {
@@ -217,7 +250,9 @@ void menuPressedLeft() {
 
 
 /*
-   check if right button is pressed while at submenu
+    submenuPressedRight()  :   check if right button is pressed
+                           :   increments the submenu level
+                           :   resets the lcd backlit counting
 */
 void submenuPressedRight() {
   if (digitalRead(right) == LOW && backlitStatus == true) {
@@ -231,7 +266,9 @@ void submenuPressedRight() {
 
 
 /*
-   check if left button is pressed while at submenu
+    submenuPressedLeft()  :   check if left button is pressed
+                          :   decrements the submenu level
+                          :   resets the lcd backlit counting
 */
 void submenuPressedLeft() {
   if (digitalRead(left) == LOW && backlitStatus == true) {
@@ -252,9 +289,12 @@ void printRightArrow() {
 }
 
 /*
-   prints underscore
-   gets 3 parameters
-   int1 & int2 are columns, int3 row
+    printUnderscoreTime()   :   used as an undersore cursor for the time
+                            :   gets 3 parameters -> int1 & int2 are columns, int3 row
+                            :   int1 column of first digit
+                            :   int2 column of second digit
+                            :   int3 row where it showld be located
+                            :   underscore is located 1 low below the digit!
 */
 void printUnderscoreTime(int int1, int int2, int int3) {
   lcd.setCursor(int1, int3); lcd.write(4);
@@ -262,16 +302,15 @@ void printUnderscoreTime(int int1, int int2, int int3) {
 }
 
 /*
-   prints up&down arrow
-   gets 2 paramets int1 culomn, int2 row of lcd arraw
+    printUpDownArrow()  :   prints up & down arrow that indicates that the data can be changed
+                        :   gets 2 paramets -> int1 culomn, int2 row of lcd arraw
 */
 void printUpDownArrow(int int1, int int2) {
   lcd.setCursor(int1, int2); lcd.write(2);
 }
 
 /*
-   check if time is saved
-   saves actual time into the Time array
+    temporaryTime() :   used as a temporaty clock
 */
 void temporaryTime() {
   if (timeSaved == false) {
@@ -296,8 +335,8 @@ void temporaryTime() {
 
 
 /*
-   checks if a button is pressed
-   clears LCD
+    refreshLCD()    :   checks if a button is pressed
+                    :   clears LCD
 */
 void refreshLCD() {
   if (pressed == true) {
@@ -309,8 +348,7 @@ void refreshLCD() {
 
 
 /*
-   reset bottle position
-   default position 13 (Pause location)
+    resetPosition() :   activates the motor rotation to set the bottle to the pause position
 */
 void resetPosition() {
   RTC.read(tm);
@@ -347,10 +385,11 @@ void resetPosition() {
 
 
 /*
-  Turns off the lcd backlit
-  Duration is measured in milliseconds, 60000 milliseconds = 1 minute
-  Backlit turned on when SELECT button is pressed
-  Time resets when a button is pressed
+    lcdBacklit()    :   Turns off the lcd backlit
+                    :   turns off the lcd panel
+                    :   Duration is measured in milliseconds, 60000 milliseconds = 1 minute
+                    :   Backlit turned on when SELECT button is pressed
+                    :   Time resets when a button is pressed
 */
 void lcdBacklit() {
   int duration = 10000 / 2;
@@ -374,8 +413,9 @@ void lcdBacklit() {
 
 
 /*
-   Prints the starting time of the program
-   format: hh:mm DD/MM/YYYY
+   submenushowTime()    :   Prints the time that is previously saved on the temporary clock
+                        :   format: hh:mm DD/MM/YYYY
+                        :   used at program setup to select the start time
 */
 void submenushowTime() {
 
@@ -392,7 +432,8 @@ void submenushowTime() {
 
 
 /*
-   Checks if the system just restarted
+    rebootedSystem()    :   Checks if the system rebooted
+                        :   Saves system information in the SD card -> boot time (RTC & UTC), location (latitude, longtitude)
 */
 void rebootedSystem() {
   RTC.read(tm);
@@ -418,11 +459,10 @@ void rebootedSystem() {
 }
 
 /*
-   Checks if the buttons are pressed
-   gets 2 parameters, int i array and int j array position
-   increments/dicrements the value stored in j location the array i
+    pressedUpDown() :   Checks if the buttons up & down are pressed
+                    :   gets 2 parameters -> int i array and int j array position
+                    :   increments/dicrements the value stored in j location the array i
 */
-
 void pressedUpDown(int i[], int j) {
   if (digitalRead(up) == LOW && backlitStatus == true) {
     i[j]++;
@@ -434,6 +474,9 @@ void pressedUpDown(int i[], int j) {
   }
 }
 
+/*
+    setSystemID()   :   sets system ID
+*/
 void setSystemID(int i) {
   systemID = i;
 }

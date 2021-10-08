@@ -16,6 +16,10 @@ void automatedProgram() {
   timeSaved = false;
 }
 
+
+/*
+   printEndProgram() :  Print the end program data on SD card
+*/
 void printEndProgram() {
   RTC.read(tm);
   myFile = SD.open("test.txt", FILE_WRITE);
@@ -39,6 +43,12 @@ void printEndProgram() {
   }
 
 }
+
+/*
+    setBottle() :   activate the motor rotation
+                :   check the bottle location
+                :   stop the motor rotation
+*/
 void setBottle(int bottlePosition) {
   while (tempLocation != bottlePosition) {
     lcdBacklit();
@@ -92,7 +102,9 @@ void programSelector() {
 */
 
 void startProgram() {
+
   if (checkDateTime()) {
+
     if (pressed == true) {
       clearLCD();
       RTC.read(tm);
