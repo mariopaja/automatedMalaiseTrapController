@@ -351,13 +351,12 @@ void startIntervals() {
       myFile.print(return2digits(tm.Minute)); myFile.print(" ");
       myFile.print(return2digits(tm.Day)); myFile.print("/"); myFile.print(return2digits(tm.Month)); myFile.print("/"); myFile.println(return2digits(tmYearToCalendar(tm.Year)));
       myFile.print("\n");
+      myFile.print("# UTC Time: ");
       if (activatedGNSS) {
-        myFile.print("# UTC Time: ");
-        myFile.println(getUTC());
-        myFile.print("\n");
+          myFile.println(getUTC());
       }
       else {
-        myFile.println("# UTC Time: -\n");
+          myFile.println("-");
       }
       myFile.println("********************************\n");
       myFile.close(); // close the file
