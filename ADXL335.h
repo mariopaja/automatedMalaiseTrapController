@@ -50,8 +50,11 @@ int getZ() {
                        : System freezes
 */
 void checkSystemFallenDown() {
-  if (getX() != 0 | getY() != 0 || getZ() != 1) {
-    if (activatedSIM7000E)SMS("System has fallen down");
+  if (getX() != 0 || getY() != 0 || getZ() != 1) {
+
+    if (activatedSMS)SMS(createMessage(systemID, "Fell Down "));
+
+    myFile = SD.open("test.txt", FILE_WRITE);
     if (myFile) {
       myFile.println("# System Has Fallen");
       myFile.println("# Sending Error SMS");
