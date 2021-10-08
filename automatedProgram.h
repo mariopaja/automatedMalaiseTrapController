@@ -157,9 +157,11 @@ void startProgram() {
           RTC.read(tm);
           saveSensorData(bottlePosition);
           time = millis();
-          unsigned long tempTime = 300000;/*300000*/
+          unsigned long tempTime = 300000;
           while (millis() - time < tempTime) {
             lcdBacklit();
+            //checkBatteryLevel();
+            //checkSystemFallenDown();
             if (digitalRead(left) == LOW && backlitStatus == true) {
               menu = 0;
               submenu = 0;
@@ -207,9 +209,11 @@ void startProgram() {
           RTC.read(tm);
           saveSensorData(bottlePosition);
           time = millis();
-          unsigned long tempTime = 300000;/*300000*/
+          unsigned long tempTime = 300000;
           while (millis() - time < tempTime) {
             lcdBacklit();
+            //checkBatteryLevel();
+            //checkSystemFallenDown();
             if (digitalRead(left) == LOW && backlitStatus == true) {
               menu = 0;
               submenu = 0;
@@ -253,21 +257,25 @@ void startProgram() {
           lcd.print("Bottle:");
           lcd.setCursor(8, 1);
           lcd.print(bottlePosition);
+
           //setBottle(bottlePosition);
 
           RTC.read(tm);
           myFile = SD.open("test.txt", FILE_WRITE);
           saveSensorData(bottlePosition);
           time = millis();
-          unsigned long tempTime = 300000;/*300000*/
+          unsigned long tempTime = 300000;
           while (millis() - time < tempTime) {
             lcdBacklit();
+
+            //checkBatteryLevel();
+            //checkSystemFallenDown();
+
             if (digitalRead(left) == LOW && backlitStatus == true) {
               menu = 0;
               submenu = 0;
               tempLocation = 0;
               pressed = true;
-
               break;
             }
           }
@@ -305,21 +313,23 @@ void startProgram() {
           lcd.print("Bottle:");
           lcd.setCursor(8, 1);
           lcd.print(bottlePosition);
+
           //setBottle(bottlePosition);
 
           RTC.read(tm);
           myFile = SD.open("test.txt", FILE_WRITE);
           saveSensorData(bottlePosition);
           time = millis();
-          unsigned long tempTime = 300000; /*300000*/
+          unsigned long tempTime = 300000;
           while (millis() - time < tempTime) {
             lcdBacklit();
+            //checkBatteryLevel();
+            //checkSystemFallenDown();
             if (digitalRead(left) == LOW && backlitStatus == true) {
               menu = 0;
               submenu = 0;
               tempLocation = 0;
               pressed = true;
-
               break;
             }
           }

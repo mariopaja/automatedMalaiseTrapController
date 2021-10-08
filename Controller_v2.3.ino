@@ -31,11 +31,7 @@
 
 /*=========== First Time Declarations ============*/
 void setup() {
-  //set_sleep_mode (SLEEP_MODE_PWR_DOWN);  
-  //sleep_enable();
- // sleep_cpu ();
 
- 
   disable_unusedComponents();
   //slowArduinoDown();
   turnOFF_analogPins();
@@ -114,17 +110,19 @@ void setup() {
   backlitTime = millis();
 }
 
-
-//myFile.print("AMMOD-T"); myFile.print(machineID); myFile.print("-M-R"); myFile.print(return2digits(tmYearToCalendar(tm.Year))); myFile.print(return2digits(tm.Month)); myFile.print(return2digits(tm.Day)); myFile.println("-B");
-
 /*================= Main Program ==================*/
 void loop() {
   RTC.read(tm);                           // Read Time From RTC
   gui();                                  // See arduinoGUI.h
   lcdBacklit();                           // See controllerSetup.h
+
+  /* Commented because the sensor is not put in place */
   //checkSystemFallenDown();                // See ADXL335.h
+
   checkSystemTemperature();               // See SIM7000E_BME280.h
   checkSystemHumidity();                  // See SIM7000E_BME280.h
+  
+  /* Commented because the voltage divider is not implemented */
   //checkBatteryLevel();                    // See controllerSetup.h
 
   if (menu == 0) welcomeMenu();           // See welcomeMenu.h

@@ -312,6 +312,10 @@ void startIntervals() {
         unsigned long waitTime = millis();
         while (millis() - waitTime < 300000) {/*300000*/
           lcdBacklit();
+
+          //checkBatteryLevel();
+          //checkSystemFallenDown();
+
           if (digitalRead(left) == LOW && backlitStatus == true) {
             menu = 0;
             submenu = 0;
