@@ -1,14 +1,13 @@
 
 /*
-   setIntervals() sets number of intervals
-   refreshLCD() clears LCD
-   printUpDownArrow(18, 1) prints up&down indicator arrows at location 18,1 of the LCD
-   printUnderscoreTime(15, 16, 2) prints underscore indicators column 15&16 row 2 for the LCD array
-   printLeftArrow() prints left arrow indicator
-   printRightArrow() prints right arrow indicator
-   buttons up/down increment/decrement the number of intervals
+   setIntervals()   :   sets number of intervals
+                    :   refreshLCD() -> clears LCD
+                    :   printUpDownArrow(18, 1) -> prints up & down indicator arrows at location 18,1 of the LCD
+                    :   printUnderscoreTime(15, 16, 2) -> prints underscore indicators column 15&16 row 2 for the LCD array
+                    :   printLeftArrow() -> prints left arrow indicator
+                    :   printRightArrow() -> prints right arrow indicator
+                    :   buttons up/down increment/decrement the number of intervals
 */
-
 void setIntervals() {
   refreshLCD();
   lcd.print("Start Program");
@@ -37,9 +36,9 @@ void setIntervals() {
 }
 
 /*
-   checks if the time set is correct (now or in the future)
-   setIntervals() sets number of intervals
-   nrIntervalCheck() checks number of intervals
+    intervals() :   checks if the time set is correct (now or in the future)
+                :   setIntervals() -> sets number of intervals
+                :   nrIntervalCheck() -> checks number of intervals
 */
 void intervals() {
   if (correctTime == false) correctTime = checkDateTime();
@@ -52,9 +51,10 @@ void intervals() {
 }
 
 /*
-   refreshLCD() clears LCD
-   printMainMenu() prints basic menu information
-   press select to set up the new program
+    manualProgram() :   refreshLCD() -> clears LCD
+                    :   printMainMenu() -> prints basic menu information
+                    :   press select to set up the new program
+                    :   declare the temporary clock as false in order to save it in the next step of start time setup
 */
 void manualProgram() {
   refreshLCD();
@@ -72,20 +72,18 @@ void manualProgram() {
 }
 
 /*
-   refreshLCD() clears LCD
-   submenuPressedLeft() checks if left button is pressed
-   for loop to setup interval data for i number of intervals
-   for loop to setup interval data for each interval
-   minimum bottle is 1
-   duration is saved in minutes
-   tempDuration saves the total amount of minutes
-   days converts total time into days
-   hours turns the remaining minutes into hours
-   mins the remaining duration
-   when j=0 increases/decreases day duration (+/- 1440 minutes)
-   when j=1 increases/decreases hour duration (+/- 60 minutes)
-   when j=2 increases/decreases minute duration (+/- 1 minute)
-   when j=3 sets number of bottles per interval
+    configureIntervals()    :   refreshLCD() -> clears LCD
+                            :   submenuPressedLeft() -> checks if left button is pressed
+                            :   for loop (i) to setup interval data for i number of intervals
+                            :   for loop (j) to setup data for each interval
+                            :   minimum number of intervals is 1
+                            :   duration is saved in minutes
+                            :   duration is shown in Days, Hours, Minutes
+                            :   tempDuration is the time saved in the array
+                            :   j=0 -> increases/decreases day duration (+/- 1440 minutes)
+                            :   j=1 -> increases/decreases hour duration (+/- 60 minutes)
+                            :   j=2 -> increases/decreases minute duration (+/- 1 minute)
+                            :   j=3 -> sets the bottle data
 */
 void configureIntervals() {
 
@@ -130,7 +128,6 @@ void configureIntervals() {
           delay(200);
         }
         printUnderscoreTime(7, 8, 3);
-        //lcd.setCursor(15, 3); lcd.print("   ");
       }
 
       /*=============Interval Duration mm=============*/
@@ -144,7 +141,6 @@ void configureIntervals() {
           delay(200);
         }
         printUnderscoreTime(10, 11, 3);
-        //lcd.setCursor(16, 3);
       }
 
       /*=============Interval Duration bottle=============*/
