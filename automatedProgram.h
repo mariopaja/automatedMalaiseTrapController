@@ -104,9 +104,12 @@ void startProgram() {
         myFile.print(return2digits(tm.Hour)); myFile.print(":");
         myFile.print(return2digits(tm.Minute)); myFile.print(" ");
         myFile.print(return2digits(tm.Day)); myFile.print("/"); myFile.print(return2digits(tm.Month)); myFile.print("/"); myFile.println(return2digits(tmYearToCalendar(tm.Year)));
+        myFile.print("# UTC Time: ");
         if (activatedGNSS) {
-          myFile.print("# UTC Time: ");
           myFile.println(getUTC());
+        }
+        else {
+            myFile.println("-");
         }
         myFile.println("# Waiting Start Time...\n");
         myFile.println("********************************\n");

@@ -229,7 +229,13 @@ void startIntervals() {
     if (myFile) {
       myFile.println("# Starting New Program");
       myFile.println("# Local Time: " + return2digits(tm.Hour) + ":" + return2digits(tm.Minute) + " " + return2digits(tm.Day) + "/" + return2digits(tm.Month) + "/" + return2digits(tmYearToCalendar(tm.Year)));
-      if (activatedSIM7000E)myFile.println("UTC Time: " + getUTC() + "\n");
+      myFile.print("# UTC Time: ");
+      if (activatedGNSS) {
+          myFile.println(getUTC());
+      }
+      else {
+          myFile.println("-");
+      }
       myFile.println("# Waiting Start Time...");
       myFile.println("\n********************************\n");
       myFile.close(); // close the file
