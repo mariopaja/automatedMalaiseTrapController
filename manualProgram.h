@@ -247,7 +247,7 @@ void startIntervals() {
   if (Time[4] == tmYearToCalendar(tm.Year) && Time[3] == tm.Month && Time[2] == tm.Day && Time[0] == tm.Hour && Time[1] <= tm.Minute) {
 
     //SMS("Manual Program Started");
-    //if(activatedSIM7000E)SMS(createMessage(systemID,"Manual Program Started"));
+    if(activatedSIM7000E)SMS(createMessage(systemID,"Manual Program Started"));
     setProgramID();
     myFile = SD.open("test.txt", FILE_WRITE);
     if (myFile) {
