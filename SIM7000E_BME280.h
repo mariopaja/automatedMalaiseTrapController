@@ -20,14 +20,16 @@ double getSystemHumidity() {
 
 void checkSystemTemperature() {
   if (activatedSIM7000E)
-    if (getSystemTemperature() > double(75)) {
+      double controllerTemperature = roundf(getSystemTemperature() * 100) / 100.0;
+    if (controllerTemperature > 75.0) {
       if (activatedSMS)SMS(createMessage(systemID, "High Temperature in Controller"));
     }
 }
 
 void checkSystemHumidity() {
-  if (activatedSIM7000E)
-    if (getSystemHumidity() > double(75)) {
+    if (activatedSIM7000E)
+        double controllerHumidity = roundf(getSystemHumidity() * 100) / 100.0;
+    if (controllerHumidity > 75.0) {
       if (activatedSMS)SMS(createMessage(systemID, "High Humidity in Controller"));
     }
 }
