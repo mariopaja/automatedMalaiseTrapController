@@ -175,7 +175,7 @@ void startProgram() {
           }
         }
         printEndProgram();
-        if (activatedSMS)SMS("Illuminance Program Ended");
+        if (activatedSMS)SMS(createMessage(systemID,"Illuminance Program Ended"));
       }
       if (program2select == 1) {
         float soilTemperature = 0.0;
@@ -228,7 +228,7 @@ void startProgram() {
           }
         }
         printEndProgram();
-        if (activatedSMS)SMS("Soil Temperature Program Ended");
+        if (activatedSMS)SMS(createMessage(systemID, "Soil Temperature Program Ended"));
       }
       if (program2select == 2) {
         int soilMoisture = 0;
@@ -284,7 +284,7 @@ void startProgram() {
           }
         }
         printEndProgram();
-        if (activatedSMS)SMS("Soil Moisture Program Ended");
+        if (activatedSMS)SMS(createMessage(systemID, "Soil Moisture Program Ended"));
       }
       if (program2select == 3) {
         float airHumidity = 0.0;
@@ -338,7 +338,7 @@ void startProgram() {
           }
         }
         printEndProgram();
-        if (activatedSMS)SMS("Air Humidity Program Ended");
+        if (activatedSMS)SMS(createMessage(systemID, "Air Humidity Program Ended"));
       }
     }
 
