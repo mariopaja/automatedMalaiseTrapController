@@ -18,113 +18,116 @@ unsigned int systemID;
 String programID = "";
 
 /*========= SIM7000E Module ========*/
-#define PIN_TX     7
-#define PIN_RX     10
-SoftwareSerial     mySerial(PIN_RX, PIN_TX);
-DFRobot_SIM7000    sim7000;
-String phoneNumber;
-String mobileOperator;
-bool sms = true;
-bool gnss = true;
-bool activatedSIM7000E = false;
-bool activatedSMS = false;
-bool activatedGNSS = false;
+#define PIN_TX     7                                /*  <-  declare TX pin of sim7000 module    */  
+#define PIN_RX     10                               /*  <-  declare RX pin of sim7000 module    */
+SoftwareSerial     mySerial(PIN_RX, PIN_TX);        /*  <-  declare the serial communication between the sim7000 and arduino mega   */
+DFRobot_SIM7000    sim7000;                         /*  <-  setup serial communication between the sim7000 and arduino mega */
+String phoneNumber;                                 /*  <-  declare the phone number variable    */
+String mobileOperator;                              /*  <-  declare the mobile operator */
+bool sms = true;                                    
+bool gnss = true;                                   
+bool activatedSIM7000E = false;                     /*  <-  declare sim7000 as non-active   */
+bool activatedSMS = false;                          /*  <-  declare sms function as non-active  */
+bool activatedGNSS = false;                         /*  <-  declare gnss function as non-active */
 
 
 /*========== BM280 Sensor ==========*/
-typedef DFRobot_BME280_IIC    BME;
-BME   bme(&Wire, 0x76);
-#define SEA_LEVEL_PRESSURE    1015.0f
+typedef DFRobot_BME280_IIC    BME;                  /*  <-  declare variable name of the BME280 */
+BME   bme(&Wire, 0x76);                             /*  <-  declare the bme280 I2C address  */
+#define SEA_LEVEL_PRESSURE    1015.0f               /*  <-  define the sea level pressure   (variable mot used) */
 
 
 /*========== BH1750 Module =========*/
-int BH1750address = 0x23;
-byte buff[2];
+int BH1750address = 0x23;                           /*  <-  declare the BH1750 address  */
+byte buff[2];                                       /*  <-  declare the buffer where the BH1750 saves the data*/
 
 
 /*============== CSMS ==============*/
-const int dry = 595; // value for dry sensor
-const int wet = 239; // value for wet sensor
-int sensorVal;
+const int dry = 595;                                /*  <-  value for dry sensor    */
+const int wet = 239;                                /*  <-  value for wet sensor    */
+int sensorVal;                                      /*  <-  declare the sensor value variable   */
 
 
 /*============ ADXL335 =============*/
-const int xpin = A0;
-const int ypin = A1;
-const int zpin = A2;
+const int xpin = A0;                                /*  <-  define the x pin of accelerometer  */
+const int ypin = A1;                                /*  <-  define the y pin of accelerometer  */
+const int zpin = A2;                                /*  <-  define the z pin of accelerometer  */
 
 
 /*========== DHT22 Module ==========*/
-#define DHTPIN 6
-#define DHTTYPE DHT22   // DHT 22  (AM2302)
-DHT DHT_22(DHTPIN, DHTTYPE); //// Initialize DHT sensor for normal 16mhz Arduino
+#define DHTPIN 6                                    /*  <-  define dht22 data pin    */
+#define DHTTYPE DHT22                               /*  <-  define dht model         */
+DHT DHT_22(DHTPIN, DHTTYPE);                        /*  <-  Initialize DHT sensor for normal 16mhz Arduino  */
 
 
 /*========= DS18B20 Sensor =========*/
-#define DS18B20 9
-OneWire oneWire(DS18B20);
-DallasTemperature DS18B20sensor(&oneWire);
+#define DS18B20 9                                   /*  <-  define soil temperature data pin    */            
+OneWire oneWire(DS18B20);                           /*  <-  define one wire communication   */    
+DallasTemperature DS18B20sensor(&oneWire);          /*  <-  initiliaze onewire communication    */
 float Celcius = 0;
 float Fahrenheit = 0;
 
 
 /*===== H-Bridge Motor Driver ======*/
-#define motorInput_1 3//y input1 low (GND pin)
-#define motorInput_2 4//o input2 high (5v pin)
+#define motorInput_1 3                              /*  <-  define h-bridge input 1 */
+#define motorInput_2 4                              /*  <-  define h-bridge input 2 */
 
 
 /*========== LCD Display ===========*/
-LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 20, 4);
+LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 20, 4); /*  <-  define lcd panel i2c address    */
 
 
 /*===== Real-Time-Clock Module =====*/
-tmElements_t tm;
+tmElements_t tm;                                    /*  <-  define time variable    */
 
 
 /*========= SD Card Module =========*/
-#define Vcc_SDcard  48
-#define GND_SDcard  49
-#define pinCS  53
-File myFile;
-char c;
+#define Vcc_SDcard  48                              /*  <-  define vcc pin of sd card   */
+#define GND_SDcard  49                              /*  <-  define gnd pin of sd card   */
+#define pinCS  53                                   /*  <-  define CS pin of the sd card    */
+File myFile;                                        /*  <-  define file variable    */
+char c;                                             
 
 
 /*============= Keypad =============*/
-#define sel  22
-#define down  23
-#define up  24
-#define left  25
-#define right  26
-#define GND_buttons  27
+#define sel  22                                     /*  <-  define select  */
+#define down  23                                    /*  <-  define down    */
+#define up  24                                      /*  <-  define up      */
+#define left  25                                    /*  <-  define left    */
+#define right  26                                   /*  <-  define right   */
+#define GND_buttons  27                             /*  <-  define gnd of keypad  */
 
 
 /*=== Magnets & Stopping Switch ====*/
-#define GND_rotor  42 //white jumper at project //1
-#define switchToddle  43
-#define magnet1  44
-#define magnet2  45
-#define magnet4  46
-#define magnet8  47
+#define GND_rotor  42                               /*  <-  define gnd of the stopping mechanism sensors    */
+#define switchToddle  43                            /*  <-  define switch toddle    */
+#define magnet1  44                                 /*  <-  define magnet 1    */
+#define magnet2  45                                 /*  <-  define magnet 2    */
+#define magnet4  46                                 /*  <-  define magnet 4    */
+#define magnet8  47                                 /*  <-  define magnet 8    */
 
 
 /*============== Menu ==============*/
-int menu = 0;
-int submenu = 0;
-bool pressed = true;
-unsigned long backlitTime;
-bool backlitStatus = true;
-bool restarted = true;
+int menu = 0;                                       /*  <-  declare the main menu level */
+int submenu = 0;                                    /*  <-  declare the main submenu level  */
+bool pressed = true;                                /*  <-  declare as plessed to clear the lcd on the first boot   */
+unsigned long backlitTime;                          /*  <-  declare the variable that counts the duration that lcd is on    */
+bool backlitStatus = true;                          /*  <-  declare backlit as on during booting    */
+bool restarted = true;                              /*  <-  declare restarted as true to allow saving boot data on boot */
 
 
 /*========= Program Time ===========*/
-int  Time[5];
-bool correctTime = false;
-bool timeSaved = false;
+int  Time[5];                                       /*  <-  declare time array to store time temporary  */
+bool correctTime = false;                           /*  <-  declare correct time as false to forse config to change time    */
+bool timeSaved = false;                             /*  <-  declare as false to force programs to check the correct time only once  */
 
 
 /*======== Manual Program ==========*/
-int nrIntervals = 1;
+int nrIntervals = 1;                                /*  <-  declare the minimum number of intervals */
 int tempLocation = 0;
+
+/*  array that will contain all the program data    */
+/*  array values are set to defaults, bottle=1 & minutes=15*/
 short int intervalData[] = {1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15,
                             1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15,
                             1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15, 1, 15,
