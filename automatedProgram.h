@@ -289,7 +289,6 @@ void startProgram() {
 							submenu = 0;
 							tempLocation = 0;
 							pressed = true;
-
 							break;
 						}
 					}
@@ -301,8 +300,14 @@ void startProgram() {
 				/*==== send SMS notification to the user ====*/
 				if (activatedSMS)SMS(createMessage(systemID, "Soil Temperature Program Ended"));
 			}
+
+			/*==== soil moisture program ====*/
 			if (program2select == 2) {
+
+				/*==== declare soil moisture as local variable ====*/
 				int soilMoisture = 0;
+
+				/*==== print the data header in the sd card ====*/
 				myFile = SD.open("test.txt", FILE_WRITE);
 				if (myFile) {
 					myFile.println("- Soil Moisture Program\n\n");
@@ -311,6 +316,8 @@ void startProgram() {
 					myFile.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 					myFile.close(); // close the file
 				}
+
+				/*==== read sensor data & select bottle ====*/
 				while (digitalRead(left) != LOW) {
 					soilMoisture = getSoilMoisture();
 					if (soilMoisture >= 0 && soilMoisture <= 5) bottlePosition = 1;
@@ -326,25 +333,29 @@ void startProgram() {
 					if (soilMoisture > 80 && soilMoisture <= 90) bottlePosition = 11;
 					if (soilMoisture > 90 && soilMoisture <= 100) bottlePosition = 12;
 					else if (soilMoisture < 0.0 || soilMoisture > 100.0) bottlePosition = 13;
+
+					/*==== print lcd information ====*/
 					lcdBacklit();
 					lcd.setCursor(0, 1);
 					lcd.print("Bottle:");
 					lcd.setCursor(8, 1);
 					lcd.print(bottlePosition);
 
-					//setBottle(bottlePosition);
+					//setBottle(bottlePosition);                          /*==== <- THIS NEEDS TO BE UNCOMMENTED BEFORE UPLOADED TO THE MICROCONTROLLER ====*/
+					//checkBatteryLevel();                                /*==== <- BATTERY CHECK HARDWARE NOT YET IMPLEMENTED ====*/
+					//checkSystemFallenDown();                            /*==== <- ACCELEROMETER NOT YET PLACED UNDER THE CONTROLLER LID ====*/
 
+					/*==== read RTC time ====*/
 					RTC.read(tm);
-					myFile = SD.open("test.txt", FILE_WRITE);
+
+					/*==== save sensor data in SD card ====*/
 					saveSensorData(bottlePosition);
+
+					/*==== start pause loop for 5 minutes ====*/
 					time = millis();
 					unsigned long tempTime = 300000;
 					while (millis() - time < tempTime) {
 						lcdBacklit();
-
-						//checkBatteryLevel();
-						//checkSystemFallenDown();
-
 						if (digitalRead(left) == LOW && backlitStatus == true) {
 							menu = 0;
 							submenu = 0;
@@ -354,11 +365,21 @@ void startProgram() {
 						}
 					}
 				}
+
+				/*==== print end program data ====*/
 				printEndProgram();
+
+				/*==== send SMS notification to the user ====*/
 				if (activatedSMS)SMS(createMessage(systemID, "Soil Moisture Program Ended"));
 			}
+
+			/*==== air humidity program ====*/
 			if (program2select == 3) {
+
+				/*==== declare soil moisture as local variable ====*/
 				float airHumidity = 0.0;
+
+				/*==== print the data header in the sd card ====*/
 				myFile = SD.open("test.txt", FILE_WRITE);
 				if (myFile) {
 					myFile.println("- Air Humidity Program\n\n");
@@ -367,6 +388,9 @@ void startProgram() {
 					myFile.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 					myFile.close(); // close the file
 				}
+
+				/*==== read sensor data & select bottle ====*/
+				/*==== FLOAT POINTS! ====*/
 				while (digitalRead(left) != LOW) {
 					airHumidity = roundf(getAirHumidity() * 100) / 100.0;
 					if (airHumidity >= 0.0 && airHumidity <= 5.0) bottlePosition = 1;
@@ -382,23 +406,29 @@ void startProgram() {
 					if (airHumidity > 80.0 && airHumidity <= 90.0) bottlePosition = 11;
 					if (airHumidity > 90.0 && airHumidity <= 100.0) bottlePosition = 12;
 					else if (airHumidity < 0.0 || airHumidity > 100.0) bottlePosition = 13;
+
+					/*==== print lcd information ====*/
 					lcdBacklit();
 					lcd.setCursor(0, 1);
 					lcd.print("Bottle:");
 					lcd.setCursor(8, 1);
 					lcd.print(bottlePosition);
 
-					//setBottle(bottlePosition);
+					//setBottle(bottlePosition);                          /*==== <- THIS NEEDS TO BE UNCOMMENTED BEFORE UPLOADED TO THE MICROCONTROLLER ====*/
+					//checkBatteryLevel();                                /*==== <- BATTERY CHECK HARDWARE NOT YET IMPLEMENTED ====*/
+					//checkSystemFallenDown();                            /*==== <- ACCELEROMETER NOT YET PLACED UNDER THE CONTROLLER LID ====*/
 
+					/*==== read RTC time ====*/
 					RTC.read(tm);
-					myFile = SD.open("test.txt", FILE_WRITE);
+					
+					/*==== save sensor data in SD card ====*/
 					saveSensorData(bottlePosition);
+
+					/*==== start pause loop for 5 minutes ====*/
 					time = millis();
 					unsigned long tempTime = 300000;
 					while (millis() - time < tempTime) {
 						lcdBacklit();
-						//checkBatteryLevel();
-						//checkSystemFallenDown();
 						if (digitalRead(left) == LOW && backlitStatus == true) {
 							menu = 0;
 							submenu = 0;
@@ -408,7 +438,11 @@ void startProgram() {
 						}
 					}
 				}
+
+				/*==== print end program data ====*/
 				printEndProgram();
+
+				/*==== send SMS notification to the user ====*/
 				if (activatedSMS)SMS(createMessage(systemID, "Air Humidity Program Ended"));
 			}
 		}
