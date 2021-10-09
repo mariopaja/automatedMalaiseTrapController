@@ -1,5 +1,6 @@
 /*
-   checkDateTime() : Check if the start time is valid
+    checkDateTime() :   Check if the start time is valid
+                    :   Start by checking the year -> month -> day -> hour -> minute
 */
 bool checkDateTime() {
   if (Time[4] > tmYearToCalendar(tm.Year)) return true;
@@ -63,7 +64,9 @@ bool leapYear(int years) {
 }
 
 /*
-   nrIntervalCheck() : checks number of Intervals
+    nrIntervalCheck()   :   checks number of Intervals
+                        :   max nr of intervals is 200
+                        :   does not allow exceeding the [1, 200]
 */
 void nrIntervalCheck() {
   if (nrIntervals > 200)nrIntervals = 1;
@@ -71,14 +74,21 @@ void nrIntervalCheck() {
 }
 
 /*
-   checks year
+    YYYYcheck() :   checks the selected year
+                :   check if the year is the actual year or in the future
+                :   start year can con go in the past
+                :   part of the start time of the program
 */
 void YYYYcheck() {
   if (Time[4] < tmYearToCalendar(tm.Year)) Time[4] = tmYearToCalendar(tm.Year);
 }
 
 /*
-   checks month
+   MMcheck()    :   checks the selected month
+                :   takes 2 variables 
+                    -> x[] is the array which contains the start time of the program
+                    -> y is the location of the array where of the month is stored
+                :   checks the month in between the [1, 12]
 */
 void MMcheck(int x[], int y) {
   if (x[y] > 12) x[y] = 1;
@@ -86,7 +96,9 @@ void MMcheck(int x[], int y) {
 }
 
 /*
-   checks date depending year and month
+    DDcheck()   :   checks the date that is showed in the start time of the program
+                :   regulates months that have 30 & 31 days
+                :   regulates february in normal & leap years
 */
 void DDcheck() {
   if (Time[2] < 1 && (Time[3] == 1 || Time[3] == 3 || Time[3] == 5 || Time[3] == 7 || Time[3] == 8 || Time[3] == 10 || Time[3] == 12)) Time[2] = 31;
@@ -100,7 +112,11 @@ void DDcheck() {
 }
 
 /*
-   checks minute
+     mmCheck()  :   checks the minutes of the start time of the programs
+                :   takes 2 variables 
+                    -> x[] is the array which contains the start time of the program
+                    -> y is the location of the array where of the minute is stored
+                :   keeps the value in the [0, 59] range
 */
 void mmCheck(int x[], int y) {
   if (x[y] == -1) x[y] = 59;
@@ -109,7 +125,11 @@ void mmCheck(int x[], int y) {
 }
 
 /*
-   checks hour
+     hhCheck()  :   checks the minutes of the start time of the programs
+                :   takes 2 variables
+                    -> x[] is the array which contains the start time of the program
+                    -> y is the location of the array where of the hour is stored
+                :   keeps the value in the [0, 23] range
 */
 void hhCheck(int x[], int y) {
   if (x[y] == -1) x[y] = 23;
@@ -118,9 +138,14 @@ void hhCheck(int x[], int y) {
 
 void tempIDcheck() {
   if (tempID < 1) tempID = 99;
-  if (tempID > 99)tempID = 1;
+  if (tempID > 99) tempID = 1;
 }
 
+/*
+    programCheck()  :   checks the selected automated program
+                    :   each automated program has an ID 
+                    :   keeps the program selection between the range [0, nrPrograms - 1]
+*/
 void programCheck() {
   if (program2select < 0) program2select = (nrPrograms - 1);
   if (program2select > (nrPrograms - 1)) program2select = 0;
