@@ -12,6 +12,8 @@ float getAirHumidity() {
 float getAirTemperature() {
   return DHT_22.readTemperature();
 }
+
+
 bool checkAirHumidity() {
   if (getAirHumidity() >= 0 && getAirHumidity() <= 100)return true;
   return false;
