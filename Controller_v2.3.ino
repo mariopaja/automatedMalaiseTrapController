@@ -100,12 +100,8 @@ void setup() {
   /*=========== See controllerSetup.h ==========*/
   sdCard();
 
-  /*=========== EEPROM Declaration =============*/
-  EEPROM.get(0, machineID);
-
   /*======= First Time Boot Declarations =======*/
   /*=========== See controllerSetup.h ==========*/
-  tempID = machineID;
   rebootedSystem();
   backlitTime = millis();
 }
