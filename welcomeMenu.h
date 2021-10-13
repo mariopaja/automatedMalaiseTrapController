@@ -9,5 +9,5 @@ void welcomeMenu() {
   lcd.setCursor(5, 3); lcd.print("Welcome!");
   lcd.setCursor(19, 3); lcd.write(1);
   menuPressedRight();
-  //resetPosition(); 
+  //resetPosition();				/*	<-	THIS SHOULD BE UNCOMMENTED, IT WILL ALLOW THE BOTTLE CHANGER TO SET BOTTLE 13 AS DEFAULT AFTER FINISHING A MANUAL PROGRAM	*/
 }
