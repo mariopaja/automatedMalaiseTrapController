@@ -1,3 +1,12 @@
+/*
+    getUTC()    :   return UTC time
+                :   GNSS must be activated in order to read the UTC
+                :   AT+CGNSINF\r command requests all data of GNSS
+                :   UTC is located between char 27 and 41
+                :   IT MIGHT BE PROBLEMATIC IF CHARACTERS ARE MISSING FROM THE CHECK string
+                :   UTC WAS TESTES ONLY IN ONE PLACE AND CHANGEING LOCATIONS COULD RESULT IN CHECK.SUBSTRING TO CHANGE
+                :   I COULDNT FIND A FUNCTION AT SIM7000 LIBRARY THAT RETURNS DIRECTLY THE UTC
+*/
 String getUTC() {
   String UTC = "";
   String Time = "";
@@ -6,7 +15,7 @@ String getUTC() {
   do {
     mySerial.println("AT+CGNSINF\r");
     while (1) {
-      if (mySerial.available()) {//provo me while nese do te ket ndonje ndryshim
+      if (mySerial.available()) {
         check = mySerial.readString();
         Serial.println(check);
         break;
@@ -21,6 +30,9 @@ String getUTC() {
   } while (1);
 }
 
+/*
+    getLongitudePosition()  :   return longtidute from gps module
+*/
 String getLongitudePosition() {
   if (sim7000.getPosition()) {
     return sim7000.getLongitude();
@@ -28,6 +40,9 @@ String getLongitudePosition() {
   return "Longitude Data Missing";
 }
 
+/*
+    getLatitudePosition()   :   return latitude from gps module
+*/
 String getLatitudePosition() {
   if (sim7000.getPosition()) {
     return sim7000.getLatitude();
