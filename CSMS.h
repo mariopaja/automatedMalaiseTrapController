@@ -8,7 +8,12 @@ int getSoilMoisture() {
   return map(sensorVal, wet, dry, 100, 0);
 }
 
-bool checkSoilMoisture() {
-  if (getSoilMoisture() >= 0 && getSoilMoisture() <= 100)return true;
+/*
+    checkSoilMoisture   :   checks the soil moisture
+                        :   0 & 100 represent the soil moisture value in %
+                        :   checks is the sensor is properly operating
+*/
+bool checkSoilMoisture(int soilMoisture) {
+  if (soilMoisture >= 0 && soilMoisture <= 100)return true;
   return false;
 }
