@@ -45,8 +45,12 @@ int getLightIntensity() {
 }
 
 
-
-bool checkLightIntensity() {
-  if (getLightIntensity() >= 0 && getLightIntensity() <= 400)return true;
+/*
+    checkLightIntensity()   :   checks the light intensity
+                            :   checks if thesensor is properly working
+                            :   the maximal value is difficult to determine AND THEREFORE IT COULD BE REMOVED IN THE FUTURE
+*/
+bool checkLightIntensity(int lightIntensity) {
+  if (lightIntensity >= 0 && lightIntensity <= 40000)return true;
   else return false;
 }

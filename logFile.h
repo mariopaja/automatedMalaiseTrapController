@@ -19,7 +19,6 @@ void saveSensorData(int bottlePosition) {
     if (bottlePosition == 13)myFile.print("N");
     else myFile.print(bottlePosition);
 
-
     myFile.print("\t\t|\t");
     myFile.print(getAirTemperature()); myFile.print("\t\t|\t");         /*  <-  print air temperature   */
 
@@ -38,17 +37,19 @@ void saveSensorData(int bottlePosition) {
     if (!checkSoilMoisture(soilMoisture))myFile.print("(E)");           /*  <-  check soil moisture value   */
     myFile.print("\t\t|\t");
 
-
-    myFile.print(getLightIntensity());                                  /*  <-  print light intensity   */ 
-    if (!checkLightIntensity())myFile.print("(E)");                     /*  <-  check light intensity value */
+    int lightIntensity = getLightIntensity();
+    myFile.print(lightIntensity);                                       /*  <-  print light intensity   */ 
+    if (!checkLightIntensity(lightIntensity))myFile.print("(E)");       /*  <-  check light intensity value */
     myFile.print("\t\t|\t");
 
 
     myFile.print(return2digits(tm.Hour)); myFile.print(":"); myFile.print(return2digits(tm.Minute));
     myFile.print(" ");
     myFile.print(return2digits(tm.Day)); myFile.print("/"); myFile.print(return2digits(tm.Month)); myFile.print("/"); myFile.print(return2digits(tmYearToCalendar(tm.Year))); myFile.print("\t|\t");
+
     if (activatedGNSS)myFile.println(getUTC());
     else myFile.println("-");
+
     myFile.close(); // close the file
   }
 }
