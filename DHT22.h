@@ -13,8 +13,12 @@ float getAirTemperature() {
   return DHT_22.readTemperature();
 }
 
-
-bool checkAirHumidity() {
-  if (getAirHumidity() >= 0 && getAirHumidity() <= 100)return true;
+/*
+	checkAirHumidity()	:	check the value of air humidity
+						:	the value 100 represents the %
+						:	this boolean checks if the sensor is operating properly
+*/
+bool checkAirHumidity(float airHumidity) {
+  if (airHumidity >= 0 && airHumidity <= 100)return true;
   return false;
 }
