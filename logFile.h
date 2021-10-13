@@ -28,9 +28,9 @@ void saveSensorData(int bottlePosition) {
     if (!checkAirHumidity(airHumidity))myFile.print("(E)");             /*  <-  check air humidity value    */
     myFile.print("\t\t|\t");
 
-
-    myFile.print(getSoilTemperature());                                 /*  <-  print soil temperature  */ 
-    if (!checkSoilTemperature())myFile.print("(E)");                    /*  <-  check soil temperature value    */
+    float soilTemperature = getSoilTemperature();
+    myFile.print(soilTemperature);                                      /*  <-  print soil temperature  */
+    if (!checkSoilTemperature(soilTemperature))myFile.print("(E)");     /*  <-  check soil temperature value    */
     myFile.print("\t\t|\t");
 
 
