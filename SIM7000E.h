@@ -336,6 +336,11 @@ void activateGNSS(){
   }
 }
 
+/*
+    createMessage() :   returns a string containing the trap id and the message
+                    :   requests the id of the trap and the string which contains the message
+                    :   THIS FUNCTION IS NOT TESTED YET!
+*/
 String createMessage(int ID, String message) {
     return "AMMOD-T" + String(ID) + "-M " + message;
 }
