@@ -1,3 +1,6 @@
+/*
+    initBME()   :   initiliazes BME280 air sensor that is located in the sim7000e module
+*/
 void initBME() {
   bme.reset();
   clearLCD();
@@ -10,14 +13,27 @@ void initBME() {
   delay(5000);
 }
 
+
+/*
+    getSystemTemperature()  :   return controller temperature
+*/
 double getSystemTemperature() {
   return bme.getTemperature();
 }
 
+
+/*
+    getSystemHumidity() :   return controller humidity
+*/
 double getSystemHumidity() {
   return bme.getHumidity();
 }
 
+/*
+    checkSystemTemperature()    :   checks the optimal temperature of the controller
+                                :   sends SMS to the user 
+                                :   NEEDS TO BE SAVED IN THE LOG FILE
+*/
 void checkSystemTemperature() {
   if (activatedSIM7000E) {
     float controllerTemperature = roundf(getSystemTemperature() * 100) / 100.0;
@@ -27,6 +43,11 @@ void checkSystemTemperature() {
   }
 }
 
+/*
+    checkSystemHumodoty()   :   checks the optimal humidity of the controller
+                            :   sends SMS to the user
+                            :   NEEDS TO BE SAVED IN THE LOG FILE
+*/
 void checkSystemHumidity() {
   if (activatedSIM7000E) {
     float controllerHumidity = roundf(getSystemHumidity() * 100) / 100.0;
