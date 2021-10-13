@@ -8,7 +8,13 @@ double getSoilTemperature() {
   return DS18B20sensor.getTempCByIndex(0);
 }
 
-bool checkSoilTemperature() {
-  if (getSoilTemperature() >= -10.0 || getSoilTemperature() <= 60.0)return true;
+
+/*
+    checkSoilTemperature()  :   checks the soil temperature value  
+                            :   THIS VALUE IS IN °C
+                            :   THIS VALUE SHOULD BE CHANGED AND SET BY THE BIOLOGIST
+*/
+bool checkSoilTemperature(float soilTemperature) {
+  if (soilTemperature >= -10.0 && soilTemperature <= 60.0)return true;
   return false;
 }
