@@ -1,3 +1,7 @@
+/*
+    activateSIM7000E()  :   asks the user if the sim7000e will be activated
+                        :   by default sim7000e is not activated (set to false)
+*/
 void activateSIM7000E(){
   clearLCD();
   lcd.setCursor(0, 0); lcd.print("Activate SIM7000E?");
@@ -145,23 +149,27 @@ void enableSMS() {
   }
 }
 
+/*
+    SMS()   :   sends the sms to the user
+            :   the text message is input as a string   
+*/
 void SMS(String s) {
-  String command = "AT+CMGS=" + phoneNumber;
-  mySerial.println(command);
-  String check = "";
+  String command = "AT+CMGS=" + phoneNumber;                    /*  <-  "AT+CMGS=+49xxxxxxxx is the at command that tells to the modem to send an sms to this particular phone number*/
+  mySerial.println(command);                                    /*  <-  sends the command to the modem  */
+  String check = "";                                            /*  <-  check is used to check the response of the modem    */
   while (1) {
-    if (mySerial.available()) {//provo me while nese do te ket ndonje ndryshim
+    if (mySerial.available()) {
       check = mySerial.readString();
-      if (check.substring(check.length() - 2, check.length() - 1) == ">")break;
+      if (check.substring(check.length() - 2, check.length() - 1) == ">")break;         /* <-   char ">" indicates that the command was successful and indicates that the modem ise xpecting the message */
     }
   }
-  mySerial.println(s);
+  mySerial.println(s);                                          /*  <-  sends the message to the modem and then waits for the modem reply*/
   while (1) {
-    if (mySerial.available()) {//provo me while nese do te ket ndonje ndryshim
+    if (mySerial.available()) {
       check = mySerial.readString(); break;
     }
   }
-  mySerial.print(char(26));
+  mySerial.print(char(26));                                     /*  <- char(26) is the send command and represents \r*/
   while (1) {
     if (mySerial.available()) {//provo me while nese do te ket ndonje ndryshim
       check = mySerial.readString(); break;
@@ -242,7 +250,7 @@ void checkSignalStrength() {
         break;
       }
       if (Signal == 99) {
-        lcd.setCursor(0, 2); lcd.print("UNKNOWN");
+        lcd.setCursor(0, 2); lcd.print("UNKNOWN");              /*  <-  unknown signal will not allow the system to boot    */
       }
     }
   }
@@ -288,6 +296,11 @@ void searchNetworks() {
   }
 }
 
+
+/*
+    activateSMS()   :   asks to activate SMS functionality
+                    :   by default this is deactivated (set to false)
+*/
 void activateSMS(){
     clearLCD();
   lcd.setCursor(0, 0); lcd.print("SEND SMS ALARMS?");
@@ -303,6 +316,11 @@ void activateSMS(){
   }
 }
 
+
+/*
+    activateGNSS()  :   asks to activate GNSS function
+                    :   by default is deactivated (set to false)
+*/
 void activateGNSS(){
   clearLCD();
   lcd.setCursor(0, 0); lcd.print("ACTIVATE GNSS?");
