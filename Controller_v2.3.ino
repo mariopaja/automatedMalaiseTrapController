@@ -39,12 +39,12 @@ void setup() {
   /*=========== Serial Declaration ============*/
   Serial.begin(9600);
   while (!Serial);
-  turnOffLED();
+  turnOffLED();                                             /*  <-  Turn off pin 13 which is responsinble to the led*/
 
   /*=========== Set System Parameters ============*/
-  setSystemID(1586);
-  setPhoneNumber("+4915223605953");
-  setMobileOperator("Dataport"); /*vodafone.de...*/
+  setSystemID(1586);                                        /*  <-  The system ID is an integer. Only write the ID number*/
+  setPhoneNumber("+4915223605953");                         /*  <-  the receiver's phone number must contain the country code. Write the phone number inside the "" */
+  setMobileOperator("Dataport"); /*vodafone.de...*/         /*  <-  The name of the operator can be found from the AT-command code. Write the operator name as it appears in AT-commads*/
 
   /*=========== Keypad Declaration ============*/
   /*========== See controllerSetup.h ==========*/
