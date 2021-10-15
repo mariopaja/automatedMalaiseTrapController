@@ -24,6 +24,7 @@ void configMenu() {
    you can change the id by pressing up/down buttons
    the id is saved on EEPROM (long term memory and it will not be erased in case of power off
 */
+/*
 void setID() {
 	refreshLCD();
 	lcd.setCursor(0, 0); lcd.print("Confing Menu");
@@ -50,7 +51,7 @@ void setID() {
 	tempIDcheck();
 
 }
-
+*/
 /*
    SetHour()    :   gets the saved hh on RTC and saves it on Time[] array
 				:   by pressing up/down it will change hh

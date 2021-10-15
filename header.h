@@ -172,9 +172,3 @@ short int Data_P3[14] = {0, 10, 20, 30, 40, 50, 60, 70, 80, 85, 90, 95, 100};
 
 /*========= GUI Program ===========*/
 String program;
-
-
-/*============ EEPROM =============*/
-int machineID;
-int tempID;
-int eeAddress = 0;

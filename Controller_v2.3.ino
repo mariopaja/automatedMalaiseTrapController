@@ -42,7 +42,7 @@ void setup() {
   turnOffLED();                                             /*  <-  Turn off pin 13 which is responsinble to the led*/
 
   /*=========== Set System Parameters ============*/
-  setSystemID(1586);                                        /*  <-  The system ID is an integer. Only write the ID number*/
+  setSystemID(1586);                                        /*  <-  The system ID is an integer. Only write the ID number and no extra characters */
   setPhoneNumber("+4915223605953");                         /*  <-  the receiver's phone number must contain the country code. Write the phone number inside the "" */
   setMobileOperator("Dataport"); /*vodafone.de...*/         /*  <-  The name of the operator can be found from the AT-command code. Write the operator name as it appears in AT-commads*/
 

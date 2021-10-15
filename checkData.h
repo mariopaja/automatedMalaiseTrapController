@@ -136,11 +136,6 @@ void hhCheck(int x[], int y) {
   if (x[y] == 24) x[y] = 0;
 }
 
-void tempIDcheck() {
-  if (tempID < 1) tempID = 99;
-  if (tempID > 99) tempID = 1;
-}
-
 /*
     programCheck()  :   checks the selected automated program
                     :   each automated program has an ID 

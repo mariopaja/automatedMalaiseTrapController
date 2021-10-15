@@ -16,7 +16,7 @@ void showID() {
   refreshLCD();
   lcd.setCursor(0, 0); lcd.print("Info Menu");
   lcd.setCursor(6, 2); lcd.print("ID:");
-  lcd.setCursor(10, 2); lcd.print(return2digits(tempID));
+  lcd.setCursor(10, 2); lcd.print(return2digits(systemID));
   lcd.setCursor(0, 3); lcd.write(0);
   lcd.setCursor(19, 3); lcd.write(1);
   submenuPressedLeft();
