@@ -303,7 +303,7 @@ void searchNetworks() {
 */
 void activateSMS(){
     clearLCD();
-  lcd.setCursor(0, 0); lcd.print("SEND SMS ALARMS?");
+  lcd.setCursor(0, 0); lcd.print("SEND SMS?");
   lcd.setCursor(0, 2); lcd.write(0);
   lcd.setCursor(2, 2); lcd.print("NO           YES");
   lcd.setCursor(19, 2); lcd.write(1);

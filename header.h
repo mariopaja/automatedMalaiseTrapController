@@ -24,8 +24,8 @@ SoftwareSerial     mySerial(PIN_RX, PIN_TX);        /*  <-  declare the serial c
 DFRobot_SIM7000    sim7000;                         /*  <-  setup serial communication between the sim7000 and arduino mega */
 String phoneNumber;                                 /*  <-  declare the phone number variable    */
 String mobileOperator;                              /*  <-  declare the mobile operator */
-bool sms = true;                                    
-bool gnss = true;                                   
+//bool sms = true;                                    
+//bool gnss = true;                                   
 bool activatedSIM7000E = false;                     /*  <-  declare sim7000 as non-active   */
 bool activatedSMS = false;                          /*  <-  declare sms function as non-active  */
 bool activatedGNSS = false;                         /*  <-  declare gnss function as non-active */
@@ -172,3 +172,9 @@ short int Data_P3[14] = {0, 10, 20, 30, 40, 50, 60, 70, 80, 85, 90, 95, 100};
 
 /*========= GUI Program ===========*/
 String program;
+
+
+/*============ EEPROM =============*/
+int machineID;
+int tempID;
+int eeAddress = 0;
