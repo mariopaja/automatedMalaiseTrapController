@@ -1,6 +1,4 @@
 void disable_unusedComponents() {
-  //power_adc_disable();
-  //power_spi_disable();
   power_usart0_disable();
   power_usart2_disable();
   power_timer1_disable();
@@ -8,7 +6,6 @@ void disable_unusedComponents() {
   power_timer3_disable();
   power_timer4_disable();
   power_timer5_disable();
-  //power_twi_disable();
 }
 
 
@@ -56,6 +53,7 @@ void turnOFF_digitalPins() {
     slowArduinoDown()   :   changes the prescaler of the microprocessor
                         :   0x80 -> activates the prescaler
                         :   0x01 -> frequency divided by 4 (2^2)
+                        :   NOT IMPLEMENTED
 */
 void slowArduinoDown() {
   CLKPR = 0x80;
@@ -117,15 +115,31 @@ void rotorPosition() {
 /*
     sdCard()    :   declare SD card
                 :   initiliaze SD card
+                :   check if sD card is recognised by the system
 */
 void sdCard() {
-  pinMode(SS, OUTPUT);
+  pinMode(pinCS, OUTPUT);
   pinMode(Vcc_SDcard, OUTPUT);
   digitalWrite(Vcc_SDcard, HIGH);
   pinMode(GND_SDcard, OUTPUT);
   digitalWrite(GND_SDcard, LOW);
-  if (!SD.begin(pinCS)) {
-    return;
+
+  clearLCD();
+  lcd.setCursor(0, 0); lcd.print("SD card");
+
+  if (SD.begin()) {
+    lcd.setCursor(0, 2); lcd.print("OK");
+    delay(4000);
+  }
+  else {
+    clearLCD();
+    lcd.setCursor(0, 2); lcd.print("Failed");
+    lcd.setCursor(2, 2); lcd.print("SKIP SD?        YES");
+    lcd.setCursor(19, 2); lcd.write(1);
+    while (1) {
+      if (digitalRead(right) == LOW)break;
+    }
+
   }
 }
 

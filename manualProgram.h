@@ -227,10 +227,10 @@ void startIntervals() {
       myFile.println("# Local Time: " + return2digits(tm.Hour) + ":" + return2digits(tm.Minute) + " " + return2digits(tm.Day) + "/" + return2digits(tm.Month) + "/" + return2digits(tmYearToCalendar(tm.Year)));
       myFile.print("# UTC Time: ");
       if (activatedGNSS) {
-          myFile.println(getUTC());
+        myFile.println(getUTC());
       }
       else {
-          myFile.println("-");
+        myFile.println("-");
       }
       myFile.println("# Waiting Start Time...");
       myFile.println("\n********************************\n");
@@ -243,7 +243,7 @@ void startIntervals() {
   if (Time[4] == tmYearToCalendar(tm.Year) && Time[3] == tm.Month && Time[2] == tm.Day && Time[0] == tm.Hour && Time[1] <= tm.Minute) {
 
     //SMS("Manual Program Started");
-    if(activatedSIM7000E)SMS(createMessage(systemID,"Manual Program Started"));
+    if (activatedSIM7000E)SMS(createMessage(systemID, "Manual Program Started"));
     setProgramID();
     myFile = SD.open("test.txt", FILE_WRITE);
     if (myFile) {
@@ -276,24 +276,24 @@ void startIntervals() {
       }
       /*========= Set Bottle Position==========*/
 
-      //          while (positionSet == false) {
-      //         digitalWrite(motorInput_1, LOW);
-      //         digitalWrite(motorInput_2, HIGH);
-      //         int tempLocation = 0;
-      //
-      //         if (digitalRead(switchToddle) == LOW) {
-      //           if (digitalRead(magnet1) == LOW)tempLocation += 1;
-      //           if (digitalRead(magnet2) == LOW)tempLocation += 2;
-      //           if (digitalRead(magnet4) == LOW)tempLocation += 4;
-      //           if (digitalRead(magnet8) == LOW)tempLocation += 8;
-      //           if (tempLocation == intervalData[(2 * i)]) {
-      //             digitalWrite(motorInput_1, LOW);
-      //             digitalWrite(motorInput_2, LOW);
-      //             positionSet = true;
-      //           }
-      //         }
-      //
-      //        }
+      while (positionSet == false) {
+        digitalWrite(motorInput_1, LOW);
+        digitalWrite(motorInput_2, HIGH);
+        int tempLocation = 0;
+
+        if (digitalRead(switchToddle) == LOW) {
+          if (digitalRead(magnet1) == LOW)tempLocation += 1;
+          if (digitalRead(magnet2) == LOW)tempLocation += 2;
+          if (digitalRead(magnet4) == LOW)tempLocation += 4;
+          if (digitalRead(magnet8) == LOW)tempLocation += 8;
+          if (tempLocation == intervalData[(2 * i)]) {
+            digitalWrite(motorInput_1, LOW);
+            digitalWrite(motorInput_2, LOW);
+            positionSet = true;
+          }
+        }
+
+      }
 
       /*=== Save Interval Data on SD Card ===*/
       RTC.read(tm);
@@ -350,10 +350,10 @@ void startIntervals() {
       myFile.print("\n");
       myFile.print("# UTC Time: ");
       if (activatedGNSS) {
-          myFile.println(getUTC());
+        myFile.println(getUTC());
       }
       else {
-          myFile.println("-");
+        myFile.println("-");
       }
       myFile.println("********************************\n");
       myFile.close(); // close the file
@@ -371,22 +371,23 @@ void startIntervals() {
     lcdBacklit();
     //waits for the start time
     //UNCOMMENT
-    //       while (tempLocation != 13) {
-    //          lcdBacklit();
-    //         digitalWrite(motorInput_1, LOW);
-    //         digitalWrite(motorInput_2, HIGH);
-    //         tempLocation = 0;
-    //         if (digitalRead(switchToddle) == LOW) {
-    //           if (digitalRead(magnet1) == LOW)tempLocation += 1;
-    //           if (digitalRead(magnet2) == LOW)tempLocation += 2;
-    //           if (digitalRead(magnet4) == LOW)tempLocation += 4;
-    //           if (digitalRead(magnet8) == LOW)tempLocation += 8;
-    //           if (tempLocation == 13) {
-    //             digitalWrite(motorInput_1, LOW);
-    //             digitalWrite(motorInput_2, LOW);
-    //           }
-    //         }
-    //       }
+
+    while (tempLocation != 13) {
+      lcdBacklit();
+      digitalWrite(motorInput_1, LOW);
+      digitalWrite(motorInput_2, HIGH);
+      tempLocation = 0;
+      if (digitalRead(switchToddle) == LOW) {
+        if (digitalRead(magnet1) == LOW)tempLocation += 1;
+        if (digitalRead(magnet2) == LOW)tempLocation += 2;
+        if (digitalRead(magnet4) == LOW)tempLocation += 4;
+        if (digitalRead(magnet8) == LOW)tempLocation += 8;
+        if (tempLocation == 13) {
+          digitalWrite(motorInput_1, LOW);
+          digitalWrite(motorInput_2, LOW);
+        }
+      }
+    }
   }
 
 }
