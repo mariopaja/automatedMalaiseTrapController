@@ -40,25 +40,27 @@ BME   bme(&Wire, 0x76);                             /*  <-  declare the bme280 I
 /*========== BH1750 Module =========*/
 int BH1750address = 0x23;                           /*  <-  declare the BH1750 address  */
 byte buff[2];                                       /*  <-  declare the buffer where the BH1750 saves the data*/
+bool isBH1750Activated=false;
 
 
 /*============== CSMS ==============*/
 const int dry = 595;                                /*  <-  value for dry sensor    */
 const int wet = 239;                                /*  <-  value for wet sensor    */
 int sensorVal;                                      /*  <-  declare the sensor value variable   */
-
+bool isCSMSActivated=false;
 
 /*============ ADXL335 =============*/
 const int xpin = A0;                                /*  <-  define the x pin of accelerometer  */
 const int ypin = A1;                                /*  <-  define the y pin of accelerometer  */
 const int zpin = A2;                                /*  <-  define the z pin of accelerometer  */
+bool isADXL335Activated=false;
 
 
 /*========== DHT22 Module ==========*/
 #define DHTPIN 6                                    /*  <-  define dht22 data pin    */
 #define DHTTYPE DHT22                               /*  <-  define dht model         */
 DHT DHT_22(DHTPIN, DHTTYPE);                        /*  <-  Initialize DHT sensor for normal 16mhz Arduino  */
-
+bool isDHT22Activated=false;
 
 /*========= DS18B20 Sensor =========*/
 #define DS18B20 9                                   /*  <-  define soil temperature data pin    */            
@@ -66,6 +68,7 @@ OneWire oneWire(DS18B20);                           /*  <-  define one wire comm
 DallasTemperature DS18B20sensor(&oneWire);          /*  <-  initiliaze onewire communication    */
 float Celcius = 0;
 float Fahrenheit = 0;
+bool isDS18B20Activated=false;
 
 
 /*===== H-Bridge Motor Driver ======*/

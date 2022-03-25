@@ -70,8 +70,8 @@ void SetHour() {
 	printRightArrow();
 	submenuPressedLeft();
 	submenuPressedRight();
-	pressedUpDown(Time, submenu - 2);
-	if (submenu < 2) {
+	pressedUpDown(Time, submenu - 1);
+	if (submenu < 1) {
 		tm.Hour = Time[0];
 		tm.Minute = Time[1];
 		tm.Second = 0;
@@ -102,7 +102,7 @@ void SetMinute() {
 	printRightArrow();
 	submenuPressedLeft();
 	submenuPressedRight();
-	pressedUpDown(Time, submenu - 2);
+	pressedUpDown(Time, submenu - 1);
 	mmCheck(Time, 1);
 }
 
@@ -125,7 +125,7 @@ void SetDate() {
 	printRightArrow();
 	submenuPressedLeft();
 	submenuPressedRight();
-	pressedUpDown(Time, submenu - 2);
+	pressedUpDown(Time, submenu - 1);
 	DDcheck();
 }
 
@@ -148,7 +148,7 @@ void SetMonth() {
 	printRightArrow();
 	submenuPressedLeft();
 	submenuPressedRight();
-	pressedUpDown(Time, submenu - 2);
+	pressedUpDown(Time, submenu - 1);
 	MMcheck(Time, 3);
 	DDcheck();
 }
@@ -173,6 +173,6 @@ void SetYear() {
 	//printRightArrow();
 	submenuPressedLeft();
 	// submenuPressedRight();
-	pressedUpDown(Time, submenu - 2);
+	pressedUpDown(Time, submenu - 1);
 	YYYYcheck();
 }

@@ -111,6 +111,15 @@ void rotorPosition() {
   digitalWrite(GND_rotor, LOW);
 }
 
+/*
+    clearLCD()  :   clears lcd
+                :   set cursor at location (0,0) of lcd array
+*/
+void clearLCD() {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+}
+
 
 /*
     sdCard()    :   declare SD card
@@ -118,14 +127,17 @@ void rotorPosition() {
                 :   check if sD card is recognised by the system
 */
 void sdCard() {
-  pinMode(pinCS, OUTPUT);
-  pinMode(Vcc_SDcard, OUTPUT);
-  digitalWrite(Vcc_SDcard, HIGH);
+ pinMode(Vcc_SDcard, OUTPUT);
   pinMode(GND_SDcard, OUTPUT);
-  digitalWrite(GND_SDcard, LOW);
+  digitalWrite(Vcc_SDcard, HIGH);
 
+  digitalWrite(GND_SDcard, LOW);
+  pinMode(pinCS, OUTPUT);
+
+  
   clearLCD();
   lcd.setCursor(0, 0); lcd.print("SD card");
+  delay(200);
 
   if (SD.begin()) {
     lcd.setCursor(0, 2); lcd.print("OK");
@@ -133,11 +145,11 @@ void sdCard() {
   }
   else {
     clearLCD();
-    lcd.setCursor(0, 2); lcd.print("Failed");
-    lcd.setCursor(2, 2); lcd.print("SKIP SD?        YES");
-    lcd.setCursor(19, 2); lcd.write(1);
+    lcd.setCursor(0, 2); lcd.print("Failed!");
+    lcd.setCursor(0, 3); lcd.print("SKIP SD?        YES");
+    lcd.setCursor(19, 3); lcd.write(1);
     while (1) {
-      if (digitalRead(right) == LOW)break;
+      if (digitalRead(right) == LOW){pressed == true;break;}
     }
 
   }
@@ -204,14 +216,7 @@ String return3digits(int number) {
   }
 }
 
-/*
-    clearLCD()  :   clears lcd
-                :   set cursor at location (0,0) of lcd array
-*/
-void clearLCD() {
-  lcd.clear();
-  lcd.setCursor(0, 0);
-}
+
 
 /*
     printMainMenu() :   prints Menu

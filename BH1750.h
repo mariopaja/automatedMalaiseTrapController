@@ -54,3 +54,19 @@ bool checkLightIntensity(int lightIntensity) {
   if (lightIntensity >= 0 && lightIntensity <= 40000)return true;
   else return false;
 }
+
+void activateBH1750(){
+  clearLCD();
+  lcd.setCursor(0, 0); lcd.print("Activate Light S?");
+  lcd.setCursor(0, 2); lcd.write(0);
+  lcd.setCursor(2, 2); lcd.print("NO           YES");
+  lcd.setCursor(19, 2); lcd.write(1);
+  while(1){
+    if(digitalRead(left) == LOW)break;
+    if(digitalRead(right) == LOW){
+        initBH1750();
+      isBH1750Activated=true;
+      break;
+    }
+  }
+}

@@ -194,7 +194,7 @@ void startProgram() {
           lcd.setCursor(8, 1);
           lcd.print(bottlePosition);
 
-          setBottle(bottlePosition);                          /*==== <- THIS NEEDS TO BE UNCOMMENTED BEFORE UPLOADED TO THE MICROCONTROLLER ====*/
+          setBottle(bottlePosition);                            /*==== <- THIS NEEDS TO BE UNCOMMENTED BEFORE UPLOADED TO THE MICROCONTROLLER ====*/
           //checkBatteryLevel();                                /*==== <- BATTERY CHECK HARDWARE NOT YET IMPLEMENTED ====*/
           //checkSystemFallenDown();                            /*==== <- ACCELEROMETER NOT YET PLACED UNDER THE CONTROLLER LID ====*/
 

@@ -61,8 +61,7 @@ void setup() {
 
   /*========== SIM7000E Declaration ===========*/
   /*============= See SIM7000E.h ==============*/
-  //Ask for permission
-  activateSIM7000E();
+  //activateSIM7000E();                             /*==== <- UNCOMMENT TO ACTIVATE THE SIM CARD FUNCTIONALITY ====*/
   if (activatedSIM7000E) {
     initSIM7000E();
     initSerial();
@@ -82,19 +81,25 @@ void setup() {
     }
     /*=========== BME280 Declaration ============*/
     /*======== See SIM7000E_BME280.h ============*/
-    initBME();
+    initBME();                                      
   }
   /*=========== DS18B20 Declaration ============*/
   /*============= See DS18B20.h ================*/
-  DS18B20sensor.begin();
+  activateDS18B20();                                /*==== <- ACTIVATES THE SOIL TEMP SENSOR ====*/
+                               
 
   /*============= DHT22 Declaration ============*/
   /*=============== See DHT22.h ================*/
-  DHT_22.begin();
+  activateDHT22();                                   /*==== <- ACTIVATES THE AIR SENSOR  ====*/
 
   /*============ BH1750 Declaration ============*/
   /*================ See BH1750.h ==============*/
-  initBH1750();
+  activateBH1750();                                 /*==== <- ACTIVATES THE LIGHT SENSOR ====*/
+
+  /*============ CSMS Declaration ============*/
+  /*================ See CSMS.h ==============*/
+  activateCSMS();                                   /*==== <- ACTIVATES THE SOIL MOIST SENSOR ====*/
+
 
   /*=========== SD Card Declaration ============*/
   /*=========== See controllerSetup.h ==========*/

@@ -20,26 +20,40 @@ void saveSensorData(int bottlePosition) {
     else myFile.print(bottlePosition);
 
     myFile.print("\t\t|\t");
-    myFile.print(getAirTemperature()); myFile.print("\t\t|\t");         /*  <-  print air temperature   */
+    if(isDHT22Activated==true)myFile.print(getAirTemperature()); 
+    else myFile.print("-");
+    myFile.print("\t\t|\t");         /*  <-  print air temperature   */
 
-    float airHumidity = getAirHumidity();
+    if(isDHT22Activated==true){
+        float airHumidity = getAirHumidity();
     myFile.print(airHumidity);                                          /*  <-  print air humidity  */
     if (!checkAirHumidity(airHumidity))myFile.print("(E)");             /*  <-  check air humidity value    */
+    }
+    else myFile.print("-");
     myFile.print("\t\t|\t");
 
-    float soilTemperature = getSoilTemperature();
+    if(isDS18B20Activated==true){
+        float soilTemperature = getSoilTemperature();
     myFile.print(soilTemperature);                                      /*  <-  print soil temperature  */
     if (!checkSoilTemperature(soilTemperature))myFile.print("(E)");     /*  <-  check soil temperature value    */
+    }
+    else myFile.print("-");
     myFile.print("\t\t|\t");
 
-    int soilMoisture = getSoilMoisture();
+    if(isCSMSActivated==true){
+        int soilMoisture = getSoilMoisture();
     myFile.print(soilMoisture);                                         /*  <-  print soil moisture */
     if (!checkSoilMoisture(soilMoisture))myFile.print("(E)");           /*  <-  check soil moisture value   */
+    }
+    else myFile.print("-");
     myFile.print("\t\t|\t");
 
-    int lightIntensity = getLightIntensity();
+    if(isBH1750Activated==true){
+int lightIntensity = getLightIntensity();
     myFile.print(lightIntensity);                                       /*  <-  print light intensity   */ 
     if (!checkLightIntensity(lightIntensity))myFile.print("(E)");       /*  <-  check light intensity value */
+    }
+    else myFile.print("-");
     myFile.print("\t\t|\t");
 
 
