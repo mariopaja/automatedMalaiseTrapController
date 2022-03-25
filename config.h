@@ -174,5 +174,5 @@ void SetYear() {
 	submenuPressedLeft();
 	// submenuPressedRight();
 	pressedUpDown(Time, submenu - 1);
-	YYYYcheck();
+	//YYYYcheck();
 }
